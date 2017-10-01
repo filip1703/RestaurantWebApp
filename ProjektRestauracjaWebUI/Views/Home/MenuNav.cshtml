@@ -1,0 +1,17 @@
+﻿@model IEnumerable<string>
+
+
+<div class="btn-group btn-group-vertical">
+
+
+    @foreach (string n in Model) {
+
+        if (n.Equals("Pierwsze_danie")) {
+            <a href="#menu" class="btn active">@n.Replace('_', ' ')</a>
+        }
+
+        else {
+            <a href="#menu" class="btn">@n.Replace('_', ' ')</a>
+        }
+    }
+</div>

@@ -1,0 +1,23 @@
+﻿@model ProjektRestauracja.WebUI.Models.BookingListViewModel
+
+@{
+    ViewBag.Title = "Rezerwacje";
+}
+
+
+<div class="container-fluid">
+    
+    <div class="row">
+        <div class="col-xs-9">
+            <h2>Twoje Rezerwacje</h2>
+        </div>
+        <div class="col-xs-3">
+            @Html.ActionLink("Zarezerwuj wizytę", "AddBooking",new { @returnUrl = Request.Url.PathAndQuery}, new { @class = "btn btn-success pull-right" })
+        </div>
+    </div>
+    @foreach (var b in Model.Bookings) {
+        @Html.Partial("BookingSummary", b);
+    }
+</div>
+
+

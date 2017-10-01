@@ -1,0 +1,38 @@
+﻿@model IEnumerable<string>
+
+<div class="btn-group">
+
+    <div class="btn-group">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Dania głowne</button>
+        <ul class="dropdown-menu" role="menu">
+            @foreach (string n in Model.Where(x => x.Contains("_danie"))) {
+
+
+                if (n.Equals("Pierwsze_danie")) {
+                    <li><a href="#menu" class="btn active">@n.Replace('_', ' ')</a></li>
+                }
+
+                else {
+                    <li><a href="#menu" class="btn">@n.Replace('_', ' ')</a></li>
+                }
+
+            }
+        </ul>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Napoje</button>
+        <ul class="dropdown-menu" role="menu">
+            @foreach (string n in Model.Where(x => x.Contains("Napoj"))) {
+
+                <li><a href="#menu" class="btn">@n.Replace('_', ' ')</a></li>
+            }
+        </ul>
+    </div>
+
+    @foreach (string n in Model.Where(x => !x.Contains("_danie") && !x.Contains("Napoj"))) {
+
+        <button href="#menu" class="btn btn-default">@n.Replace('_', ' ')</button>
+    }
+
+</div>

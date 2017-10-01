@@ -1,0 +1,66 @@
+﻿@model ProjektRestauracja.WebUI.Models.OrderListViewModel
+
+@{
+    ViewBag.Title = "Zamowienia";
+    int i = 1;
+}
+
+<script type="text/javascript">
+    function changeVisibility(x) {
+        var id = "pozycje" + x;
+        if (document.getElementById(id).hasAttribute("hidden")) document.getElementById(id).removeAttribute("hidden");
+        else document.getElementById(id).setAttribute("hidden",true);
+    }
+</script>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-9">
+            <h2>Twoje Zamówienia</h2>
+        </div>
+        <div class="col-xs-3">
+            @Html.RouteLink("Nowe zamówienie", new { action = "AddOrder" }, new { @class = "btn btn-success pull-right" })
+        </div>
+    </div>
+    
+    @foreach (var o in Model.Orders) {
+        <div class="well">
+            @Html.Partial("OrderSummary", o._Order)
+
+            @{
+                string id = $"pozycje{i}";
+            }
+
+            <button class="btn btn-danger" onclick="changeVisibility(@i)">Pokaz szczegóły</button>
+
+
+
+            <table id=@id hidden class="table">
+
+                @foreach (var pp in o.Positions.Zip(from p in o.Positions
+                                                   join pr in Model.Products on p.ProductID equals pr.ProductID
+                                                   select pr, Tuple.Create)) {
+
+
+                    <tr>
+                        <td>@pp.Item2.Name</td>
+                        <td class="text-right">@pp.Item1.Quantity<span> x </span>@pp.Item2.Price.ToString("c")</td>
+                    </tr>
+
+
+
+                }
+
+                @if (!o.Positions.Any()) {
+                    <tr>
+                        <td>Brak pozycji</td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+                    i++;
+                }
+</div>
+

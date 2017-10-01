@@ -1,0 +1,116 @@
+﻿@model ProjektRestauracja.WebUI.Models.OrderMaker
+
+
+@{
+    ViewBag.Title = "Zamówienie";
+
+    AjaxOptions ajaxOpts = new AjaxOptions {
+        UpdateTargetId = "tab"
+    };
+
+}
+
+
+
+<div class="panel">
+    <div class="panel-heading">
+        <h2>Nowe zamówienie</h2>
+       
+    </div>
+
+    @Html.ValidationSummary();
+
+    <div class="panel-body">
+        <p class="lead">Dodaj interesujące Cię produkty a następnie złóż zamówienie:</p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><b>Nazwa</b></th>
+                    <th><b>Ilość</b></th>
+                    <th><b>Cena</b></th>
+                    <th class="text-right"><b>Koszt</b></th>
+                </tr>
+            </thead>
+            <tbody id="tab">
+
+                @{ Html.Action("UpdatePositionList", "Order", new { ProductID = Model.IdToChange });
+                    /* <thead>
+                <tr>
+                    <th><b>Nazwa</b></th>
+                    <th><b>Ilość</b></th>
+                    <th><b>Cena</b></th>
+                    <th class="text-right"><b>Koszt</b></th>
+                </tr>
+            </thead>
+                      <tbody>
+                      foreach (var x in Model.Positions) {
+                    <tr>
+                        @{ var product = Model.Menu.Where(p => (p.ProductID == x.ProductID)).Select(p => p).SingleOrDefault();
+                            decimal cost = x.Quantity * product.Price;
+
+                        }
+
+                        <td>@product.Name</td>
+                        <td>@x.Quantity</td>
+                        <td>@product.Price.ToString("c")</td>
+                        <td class="text-right">@cost.ToString("c")</td>
+                        <td class="text-right">
+                            @using (Html.BeginForm("RemovePosition", "Order")) {
+
+                                @Html.Hidden("ProductID", x.ProductID);
+                                <input type="submit" value="Usuń" class="btn btn-danger" />
+                            }
+                        </td>
+                    </tr>
+                            }
+
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right"><b>@Model.CalculateTotalCost().ToString("c")</b></td>
+                </tr>
+            </tfoot>*/
+                }
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right"><b>@Model.CalculateTotalCost().ToString("c")</b></td>
+                </tr>
+            </tfoot>
+        </table>
+
+
+        @using (Ajax.BeginForm("UpdatePositionList","Order",ajaxOpts)) {
+            
+            
+
+            <div class="form-group">
+                @Html.Label("ProductID", "Nowa pozycja:")
+                <div class="row">
+                    <div class="col-xs-11">
+                        @Html.DropDownList("ProductID", new SelectList(Model.Menu.Select(p => new SelectListItem { Value = p.ProductID.ToString(), Text = p.Name + "(" + p.Price.ToString("c") + ")" }), "Value", "Text"), new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-1">
+                        <input type="submit" value="Dodaj" style="margin:0" class="btn btn-primary" />
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="text-center">
+                @Html.ActionLink("Powrót do listy", "List", "Order", null, new { @class = "btn btn-primary" })
+                
+                @Html.ActionLink("Złóż zamówienie", "SaveOrder", null, new { @class = "btn btn-success" })
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
+
+
+

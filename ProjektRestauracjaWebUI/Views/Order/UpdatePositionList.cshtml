@@ -1,0 +1,33 @@
+﻿@model ProjektRestauracja.WebUI.Models.OrderMaker
+
+@{
+    ViewBag.Title = "UpdatePositionList";
+}
+
+
+
+@foreach (var x in Model.Positions) {
+<tr>
+    @{ var product = Model.Menu.Where(p => (p.ProductID == x.ProductID)).Select(p => p).SingleOrDefault();
+        decimal cost = x.Quantity * product.Price;
+
+    }
+
+    <td>@product.Name</td>
+    <td>@x.Quantity</td>
+    <td>@product.Price.ToString("c")</td>
+    <td class="text-right">@cost.ToString("c")</td>
+    <td class="text-right">
+        
+            @Ajax.ActionLink("Usuń","UpdatePositionList",
+                   new { ProductID = -x.ProductID },
+                   new AjaxOptions { UpdateTargetId = "tab" },
+                   new { @class = "btn btn-danger" })
+
+      
+        
+    </td>
+</tr>
+}
+
+

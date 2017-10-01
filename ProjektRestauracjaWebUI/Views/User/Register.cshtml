@@ -1,0 +1,46 @@
+﻿@model ProjektRestauracja.Domain.Entities.Client
+
+@{
+    ViewBag.Title = "Register";
+}
+
+
+    <div class="panel">
+
+        <div class="panel-heading">
+            <h2>Rejestracja</h2>
+        </div>
+        <div class="panel-body">
+            <p class="lead">Proszę podać dane do rejestracji:</p>
+
+            @using (Html.BeginForm()) {
+
+                @Html.ValidationSummary()
+                <div class="form-group">
+                    <label>Imię:</label>
+                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <label>Nazwisko:</label>
+                    @Html.TextBoxFor(x => x.SecondName, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <label>E-mail:</label>
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <label>Hasło:</label>
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                </div>
+
+                <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+
+            }
+        </div>
+    </div>
+
+
+

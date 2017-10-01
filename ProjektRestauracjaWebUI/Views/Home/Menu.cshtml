@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ProjektRestauracja.Domain.Entities.Product>
+
+
+
+<div class="lead row">
+
+    <table class="col-xs-offset-2">
+        @foreach (var p in Model) {
+            <tr>
+                <td class="text-left">
+                    @p.Name
+                </td>
+                <td>
+                    @p.Price.ToString("c")
+                </td>
+            </tr>
+
+        }
+    </table>
+
+</div>
+
+
+
+
+    
+
+
